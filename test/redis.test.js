@@ -41,7 +41,7 @@ describe('Test Node Url Shortener Without Dates - RedisModel', function () {
   it('kUrl should return Redis key', function (done) {
     var data = redis.kUrl(long_url);
     expect(data).to.be.a('string');
-    expect(data).to.be(prefix + 'url:a9b9f04336ce0181a08e774e01113b31');
+    expect(data).to.be(prefix + 'url:f0e6a6a97042a4f1f1c87f5f7d44315b2d852c2df5c7991cc66241bf7072d1c4');
     done();
   });
 
@@ -52,10 +52,10 @@ describe('Test Node Url Shortener Without Dates - RedisModel', function () {
     done();
   });
 
-  it('md5 should return MD5 hash', function (done) {
-    var data = redis.md5(long_url);
+  it('genHash should return SHA256 hash', function (done) {
+    var data = redis.genHash(long_url);
     expect(data).to.be.a('string');
-    expect(data).to.be('a9b9f04336ce0181a08e774e01113b31');
+    expect(data).to.be('f0e6a6a97042a4f1f1c87f5f7d44315b2d852c2df5c7991cc66241bf7072d1c4');
     done();
   });
 
@@ -201,7 +201,7 @@ describe('Test Node Url Shortener With Dates - RedisModel', function () {
   it('kUrl should return Redis key', function (done) {
     var data = redis.kUrl(long_url);
     expect(data).to.be.a('string');
-    expect(data).to.be(prefix + 'url:a9b9f04336ce0181a08e774e01113b31');
+    expect(data).to.be(prefix + 'url:f0e6a6a97042a4f1f1c87f5f7d44315b2d852c2df5c7991cc66241bf7072d1c4');
     done();
   });
 
@@ -212,10 +212,10 @@ describe('Test Node Url Shortener With Dates - RedisModel', function () {
     done();
   });
 
-  it('md5 should return MD5 hash', function (done) {
-    var data = redis.md5(long_url);
+  it('genHash should return SHA256 hash', function (done) {
+    var data = redis.genHash(long_url);
     expect(data).to.be.a('string');
-    expect(data).to.be('a9b9f04336ce0181a08e774e01113b31');
+    expect(data).to.be('f0e6a6a97042a4f1f1c87f5f7d44315b2d852c2df5c7991cc66241bf7072d1c4');
     done();
   });
 
@@ -332,4 +332,3 @@ describe('Test Node Url Shortener With Dates - RedisModel', function () {
     });
   });
 })
-
