@@ -5,7 +5,7 @@ module.exports = function (app, nus) {
 
   router.route('/shorten')
     .post(function (req, res) {
-      nus.shorten(req.body['long_url'], req.body['start_date'], req.body['end_date'], req.body['c_new'], function (err, reply) {
+      nus.shorten(req.body['long_url'], req.body['start_date'], req.body['end_date'], req.body['c_new'], req.body['metadata'], function (err, reply) {
         if (err) {
           jsonResponse(res, err);
         } else if (reply) {
@@ -36,15 +36,20 @@ module.exports = function (app, nus) {
         if (err) {
           jsonResponse(res, err);
         } else if (reply) {
+          console.log(reply);
+
           startDate = reply.start_date || 0;
           endDate = reply.end_date || 0;
           toDay = new Date();
-          if((+startDate - +toDay) > 0 || (+endDate - +toDay) < 0 ){
-            err = {"error" : "sorry this url has expired"};
-            jsonResponse(res, 200, err);
-          }else{
-            jsonResponse(res, 200, reply);
+
+          if ((parseInt(startDate) > 0) && (parseInt(endDate) > 0)) {
+            if((+startDate - +toDay) > 0 || (+endDate - +toDay) < 0 ){
+              err = {"error" : "sorry this url has expired"};
+              jsonResponse(res, 400, err);
+            }
           }
+
+          jsonResponse(res, 200, reply);
 
         } else {
           jsonResponse(res, 500);

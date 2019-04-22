@@ -30,10 +30,11 @@ describe('Test Node Url Shortener without start_date and end_date - Nus', functi
     dateObject.start_date = '';
     dateObject.end_date = '';
     cNew = 'false';
+    metadata = '{ campaign_id: 000 }';
   });
 
   it('should shorten', function (done) {
-    nus.shorten(long_url, dateObject.start_date, dateObject.end_date, cNew,  function (err, reply) {
+    nus.shorten(long_url, dateObject.start_date, dateObject.end_date, cNew,  metadata, function (err, reply) {
       expect(err).to.be(null);
       expect(reply).to.not.be.empty();
       expect(reply).to.only.have.keys('hash', 'long_url');
@@ -52,11 +53,12 @@ describe('Test Node Url Shortener without start_date and end_date - Nus', functi
           'hash', short_url,
           'start_date', dateObject.start_date,
           'end_date', dateObject.end_date,
+          'metadata', metadata,
           'clicks', 1
         ]
       ]).exec(function (err, replies) {
 
-        nus.shorten(long_url, dateObject.start_date, dateObject.end_date, cNew, function (err, reply) {
+        nus.shorten(long_url, dateObject.start_date, dateObject.end_date, cNew, metadata, function (err, reply) {
           expect(err).to.be(null);
           expect(reply).to.not.be.empty();
           expect(reply).to.only.have.keys('hash', 'long_url');
@@ -93,10 +95,11 @@ describe('Test Node Url Shortener with start_date and end_date - Nus', function 
     dateObject.start_date = addDays(0);
     dateObject.end_date = addDays(2);
     cNew = 'true';
+    metadata = '{ campaign_id: 0 }';
   });
 
   it('should shorten', function (done) {
-    nus.shorten(long_url, dateObject.start_date, dateObject.end_date, cNew,  function (err, reply) {
+    nus.shorten(long_url, dateObject.start_date, dateObject.end_date, cNew,  metadata, function (err, reply) {
       expect(err).to.be(null);
       expect(reply).to.not.be.empty();
       expect(reply).to.only.have.keys('hash', 'long_url');
@@ -119,7 +122,7 @@ describe('Test Node Url Shortener with start_date and end_date - Nus', function 
         ]
       ]).exec(function (err, replies) {
 
-        nus.shorten(long_url, dateObject.start_date, dateObject.end_date, cNew, function (err, reply) {
+        nus.shorten(long_url, dateObject.start_date, dateObject.end_date, cNew, metadata, function (err, reply) {
           expect(err).to.be(null);
           expect(reply).to.not.be.empty();
           expect(reply).to.only.have.keys('hash', 'long_url');
@@ -132,4 +135,3 @@ describe('Test Node Url Shortener with start_date and end_date - Nus', function 
     });
   });
 })
-

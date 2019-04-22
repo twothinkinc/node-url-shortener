@@ -29,6 +29,7 @@ describe('Test Node Url Shortener Without Dates - RedisModel', function () {
     short_url = 'foo'
     dateObject.start_date = '';
     dateObject.end_date = '';
+    metadata = '{ campaign_id: 0 }';
   });
 
   it('kCounter should return Redis key', function (done) {
@@ -105,7 +106,7 @@ describe('Test Node Url Shortener Without Dates - RedisModel', function () {
       redis.findHash(short_url, function(err, reply) {
         expect(err).to.be(null);
         expect(reply).to.not.be.empty();
-        expect(reply).to.only.have.keys('clicks', 'hash', 'url', 'start_date', 'end_date');
+        expect(reply).to.only.have.keys('clicks', 'hash', 'url', 'start_date', 'end_date', 'metadata');
         expect(reply.hash).to.be(short_url);
         expect(reply.url).to.be(long_url);
         done();
@@ -136,7 +137,7 @@ describe('Test Node Url Shortener Without Dates - RedisModel', function () {
   });
 
   it('set should return Redis value', function (done) {
-    redis.set(long_url, dateObject, cNew, function(err, reply) {
+    redis.set(long_url, dateObject, cNew, metadata, function(err, reply) {
       expect(err).to.be(null);
       expect(reply).to.not.be.empty();
       expect(reply).to.only.have.keys('hash', 'long_url');
@@ -161,7 +162,7 @@ describe('Test Node Url Shortener Without Dates - RedisModel', function () {
       redis.get(short_url, function(err, reply) {
         expect(err).to.be(null);
         expect(reply).to.not.be.empty();
-        expect(reply).to.only.have.keys('hash', 'long_url', 'clicks', 'start_date', 'end_date');
+        expect(reply).to.only.have.keys('hash', 'long_url', 'clicks', 'start_date', 'end_date', 'metadata');
         expect(reply.hash).to.be(short_url);
         expect(reply.long_url).to.be(long_url);
         done();
@@ -265,7 +266,7 @@ describe('Test Node Url Shortener With Dates - RedisModel', function () {
       redis.findHash(short_url, function(err, reply) {
         expect(err).to.be(null);
         expect(reply).to.not.be.empty();
-        expect(reply).to.only.have.keys('clicks', 'hash', 'url', 'start_date', 'end_date');
+        expect(reply).to.only.have.keys('clicks', 'hash', 'url', 'start_date', 'end_date', 'metadata');
         expect(reply.hash).to.be(short_url);
         expect(reply.url).to.be(long_url);
         done();
@@ -296,7 +297,7 @@ describe('Test Node Url Shortener With Dates - RedisModel', function () {
   });
 
   it('set should return Redis value', function (done) {
-    redis.set(long_url, dateObject, cNew, function(err, reply) {
+    redis.set(long_url, dateObject, cNew, metadata, function(err, reply) {
       expect(err).to.be(null);
       expect(reply).to.not.be.empty();
       expect(reply).to.only.have.keys('hash', 'long_url');
@@ -321,7 +322,7 @@ describe('Test Node Url Shortener With Dates - RedisModel', function () {
       redis.get(short_url, function(err, reply) {
         expect(err).to.be(null);
         expect(reply).to.not.be.empty();
-        expect(reply).to.only.have.keys('hash', 'long_url', 'clicks', 'start_date', 'end_date');
+        expect(reply).to.only.have.keys('hash', 'long_url', 'clicks', 'start_date', 'end_date', 'metadata');
         expect(reply.hash).to.be(short_url);
         expect(reply.long_url).to.be(long_url);
         expect(reply.start_date).to.not.be.empty();
