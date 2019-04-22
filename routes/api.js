@@ -36,15 +36,13 @@ module.exports = function (app, nus) {
         if (err) {
           jsonResponse(res, err);
         } else if (reply) {
-          console.log(reply);
-
-          startDate = reply.start_date || 0;
-          endDate = reply.end_date || 0;
+          startDate = parseInt(reply.start_date) || 0;
+          endDate = parseInt(reply.end_date) || 0;
           toDay = new Date();
 
           if ((parseInt(startDate) > 0) && (parseInt(endDate) > 0)) {
             if((+startDate - +toDay) > 0 || (+endDate - +toDay) < 0 ){
-              err = {"error" : "sorry this url has expired"};
+              err = {"error" : "URL Expired"};
               jsonResponse(res, 400, err);
             }
           }
