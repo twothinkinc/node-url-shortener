@@ -92,8 +92,8 @@ describe('Test Node Url Shortener with start_date and end_date - Nus', function 
     };
     long_url = 'http://example.com';
     short_url = 'foo';
-    dateObject.start_date = addDays(0);
-    dateObject.end_date = addDays(2);
+    dateObject.start_date = new Date(addDays(0));
+    dateObject.end_date = new Date(addDays(2));
     cNew = 'true';
     metadata = '{ campaign_id: 0 }';
   });

@@ -11,12 +11,27 @@ module.exports = function (app, nus) {
     res.render('index');
   });
 
-  // shorten route
+  // expands route
   app.get(/^\/([\w=]+)$/, function (req, res, next){
     nus.expand(req.params[0], function (err, reply) {
       if (err) {
         next();
       } else {
+        // is it expired?
+        startDate = parseInt(reply.start_date) || 0;
+        endDate = parseInt(reply.end_date) || 0;
+        toDay = new Date();
+
+        if ((parseInt(startDate) > 0) && (parseInt(endDate) > 0)) {
+          if((+startDate - +toDay) > 0 || (+endDate - +toDay) < 0 ){
+            res.render('error', {
+              code: 400,
+              message: 'URL Expired',
+              error: 'URL Expired'
+            });
+            return;
+          }
+        }
         res.redirect(301, reply.long_url);
       }
     }, true);

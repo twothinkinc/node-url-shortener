@@ -44,9 +44,9 @@ module.exports = function (app, nus) {
             if((+startDate - +toDay) > 0 || (+endDate - +toDay) < 0 ){
               err = {"error" : "URL Expired"};
               jsonResponse(res, 400, err);
+              return;
             }
           }
-
           jsonResponse(res, 200, reply);
 
         } else {

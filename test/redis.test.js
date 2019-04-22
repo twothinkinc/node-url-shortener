@@ -188,8 +188,8 @@ describe('Test Node Url Shortener With Dates - RedisModel', function () {
     prefix = RedisModel._prefix_;
     long_url = 'http://example.com';
     short_url = 'foo'
-    dateObject.start_date = addDays(0);
-    dateObject.end_date = addDays(2);
+    dateObject.start_date = new Date(addDays(0));
+    dateObject.end_date = new Date(addDays(2));
   });
 
   it('kCounter should return Redis key', function (done) {
@@ -313,8 +313,8 @@ describe('Test Node Url Shortener With Dates - RedisModel', function () {
       ['hmset', redis.kHash(short_url),
         'url', long_url,
         'hash', short_url,
-        'start_date', dateObject.start_date,
-        'end_date', dateObject.end_date,
+        'start_date', dateObject.start_date.getTime(),
+        'end_date', dateObject.end_date.getTime(),
         'clicks', 1
       ]
     ]).exec(function (err, replies) {
