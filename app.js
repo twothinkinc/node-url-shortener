@@ -4,6 +4,11 @@ var express = require('express')
   , opts = require(path.join(__dirname, 'config', 'opts.js'))
   , nus = require(path.join(__dirname, 'lib', 'nus.js'))(opts);
 
+// import secrets into the env from the vault.
+require('dotenv').config(); // we'll get VAULT_TOKEN from .env
+const vaultClient = require('./config/vault'); // the rest from the vault server
+require('vault-env');
+
 // Gotta Catch 'Em All
 process.addListener('uncaughtException', function (err, stack) {
   console.log('Caught exception: ' + err + '\n' + err.stack);
